@@ -1,15 +1,21 @@
 module.exports = function makeAddDocument({
     Joi,
     addDocumentDb,
-    ValidationError
+    checkCollection,
+    ValidationError,
+    createCollection
 }) {
     return async function addDocument({
         docs, collectionName
 
     }) {
         validateCollectionName(collectionName);
-        validateInputData({ docs })
-        const result = await addDocumentDb({ docs, collectionName, numShards: 1, replicationFactor: 1 });
+        validateInputData({ docs });
+        const isCollectionExist = await checkCollection({ collectionName });
+        if (!isCollectionExist) {
+            await createCollection({ docs, collectionName, numShards: 1, replicationFactor: 1, config: "_default" });
+        }
+        const result = await addDocumentDb({ docs, collectionName })
         return result;
     }
     function validateCollectionName({ collectionName }) {

@@ -4,12 +4,11 @@ module.exports = function makeSolrDbMethod({ axios, baseURL, DatabaseError }) {
         updateDocument,
         getDocument,
         deleteDocument,
-
     });
 
-    async function addDocument({ docs }) {
+    async function addDocument({ docs, collectionName }) {
         console.log("addData", docs);
-        await axios.post(`${baseURL}/upldate?commit=true`, docs, {
+        await axios.post(`${baseURL}/${collectionName}/upldate?commit=true`, docs, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -29,7 +28,7 @@ module.exports = function makeSolrDbMethod({ axios, baseURL, DatabaseError }) {
     }) {
 
         try {
-            const response = await axios.post(baseURL, updateData, {
+            const response = await axios.post(`${baseURL}/${collectionName}/upldate?commit=true`, updateData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -52,7 +51,7 @@ module.exports = function makeSolrDbMethod({ axios, baseURL, DatabaseError }) {
         ];
 
         try {
-            const response = await axios.post(`${baseURL}/update?commit=true`, { delete: { id: id } }, {
+            const response = await axios.post(`${baseURL}/${collectionName}/upldate?commit=true`, { delete: { id: id } }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -83,8 +82,7 @@ module.exports = function makeSolrDbMethod({ axios, baseURL, DatabaseError }) {
         };
 
         try {
-            const response = await axios.get(`${baseURL}/select`, { params });
-
+            const response = await axios.get(`${baseURL}/${collectionName}/select`, { params });
             console.log('Query results:');
             console.log(response.data.response.docs);
             return response.data.response.docs;

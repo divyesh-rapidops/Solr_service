@@ -1,4 +1,4 @@
 const config = {
-    baseURL: 'http://localhost:8983/solr/new'
+    baseURL: 'http://localhost:8983/solr'
 }
 module.exports = config;

@@ -1,15 +1,13 @@
 const makeAddDocumentAction = require('./add-document');
 const useCase = require('../use-cases');
 
-const makeCreateCollection = require('./create-collection');
-const createCollection = makeCreateCollection({
-    axios,
-    Joi,
-    ValidationError
+const makeCreateCollectionAction = require('./create-collection');
+const createCollectionAction = makeCreateCollectionAction({
+    createCollection: useCase.createCollection,
 })
 
 const addDocumentAction = makeAddDocumentAction({
-    createCollection,
+    createCollection: useCase.createCollection,
     addDocument: useCase.addDocument
 });
 const makeDeleteDocumentAction = require('./delete-document');
@@ -31,5 +29,6 @@ module.exports = {
     addDocumentAction,
     getDocumentAction,
     updateDocumentAction,
-    deleteDocumentAction
+    deleteDocumentAction,
+    createCollectionAction
 }

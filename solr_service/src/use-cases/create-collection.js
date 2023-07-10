@@ -2,16 +2,17 @@ module.exports = function makeCreateCollection({
     axios
 }) {
     return async function createCollection({
-        collectionName, numShards, replicationFactor
+        collectionName, numShards, replicationFactor, configset
     }) {
         const url = 'http://localhost:8983/solr/admin/collections';
-        validateInputData(collectionName, numShards, replicationFactor);
+        validateInputData(collectionName, numShards, replicationFactor, configset);
 
         const data = {
             action: 'CREATE',
             name: collectionName,
             numShards: numShards,
-            replicationFactor: replicationFactor
+            replicationFactor: replicationFactor,
+            config: configset
         };
 
         try {
@@ -21,7 +22,6 @@ module.exports = function makeCreateCollection({
         } catch (error) {
             console.error('Error creating Solr collection:', error);
         }
-
     }
 
     function validateInputData({ collectionName, numShards, replicationFactor }) {
