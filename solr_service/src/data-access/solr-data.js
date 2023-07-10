@@ -4,11 +4,12 @@ module.exports = function makeSolrDbMethod({ axios, baseURL, DatabaseError }) {
         updateDocument,
         getDocument,
         deleteDocument,
+        createCollection
     });
 
     async function addDocument({ docs, collectionName }) {
         console.log("addData", docs);
-        await axios.post(`${baseURL}/${collectionName}/upldate?commit=true`, docs, {
+        await axios.post(`${baseURL}/${collectionName}/update?commit=true`, docs, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -28,7 +29,7 @@ module.exports = function makeSolrDbMethod({ axios, baseURL, DatabaseError }) {
     }) {
 
         try {
-            const response = await axios.post(`${baseURL}/${collectionName}/upldate?commit=true`, updateData, {
+            const response = await axios.post(`${baseURL}/${collectionName}/update?commit=true`, updateData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -51,7 +52,7 @@ module.exports = function makeSolrDbMethod({ axios, baseURL, DatabaseError }) {
         ];
 
         try {
-            const response = await axios.post(`${baseURL}/${collectionName}/upldate?commit=true`, { delete: { id: id } }, {
+            const response = await axios.post(`${baseURL}/${collectionName}/update?commit=true`, { delete: { id: id } }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -90,6 +91,33 @@ module.exports = function makeSolrDbMethod({ axios, baseURL, DatabaseError }) {
             console.error('Error querying data:', error.message);
             throw new DatabaseError(error);
 
+        }
+    }
+    async function createCollection({
+        collectionName, numShards, replicationFactor, configset
+    }) {
+        console.log("createcollectionDb", collectionName, numShards, replicationFactor, configset)
+        const data = {
+            "create": {
+                name: collectionName,
+                numShards: numShards,
+                replicationFactor: replicationFactor,
+                config: configset
+            }
+        };
+
+        try {
+            const response = await axios.post(`http://localhost:8983/api/collections`, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(`Solr collection ${collectionName} created successfully.`);
+            console.log(response.data);
+            return response;
+        } catch (error) {
+            console.error('Error creating Solr collection:', error);
+            throw new DatabaseError(error);
         }
     }
 

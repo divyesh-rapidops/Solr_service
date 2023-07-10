@@ -10,11 +10,13 @@ module.exports = function makeAddDocument({
         docs, collectionName
 
     }) {
-        validateCollectionName(collectionName);
+        console.log("addDocument usecase", docs, collectionName)
+        validateCollectionName({ collectionName });
         validateInputData({ docs });
         const isCollectionExist = await checkCollection({ collectionName });
+        console.log("is collection exist", isCollectionExist)
         if (!isCollectionExist) {
-            await createCollection({ docs, collectionName, numShards: 1, replicationFactor: 1, config: "_default" });
+            await createCollection({ docs, collectionName, numShards: 1, replicationFactor: 1, configset: "_default" });
         }
         const result = await addDocumentDb({ docs, collectionName })
         return result;
@@ -31,6 +33,7 @@ module.exports = function makeAddDocument({
     }
 
     function validateInputData({ docs }) {
+        console.log("docs", typeof docs, docs)
         for (let doc of docs) {
             console.log("doc", doc)
             let keys = Object.keys(doc);

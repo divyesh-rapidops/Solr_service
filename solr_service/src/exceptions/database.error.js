@@ -5,7 +5,7 @@ class DatabaseError extends Error {
 
         // Maintains proper stack trace for where our error was thrown (only available on V8)
         if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, ValidationError);
+            Error.captureStackTrace(this, DatabaseError);
         }
 
         this.name = 'DatabaseError';
@@ -14,4 +14,4 @@ class DatabaseError extends Error {
         this.date = new Date();
     }
 }
-module.exports = ValidationError;
+module.exports = DatabaseError;

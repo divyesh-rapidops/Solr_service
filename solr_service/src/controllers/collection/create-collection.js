@@ -7,6 +7,7 @@ module.exports = function makeCreateCollectionAction({
             const numShards = req.body.numShards;
             const replicationFactor = req.body.replicationFactor;
             const configset = req.body.configset;
+            console.log("createCollection", collectionName, numShards, replicationFactor, configset, req.body)
             const result = await createCollection({ collectionName, numShards, replicationFactor, configset });
             res.status(201).json({
                 message: "collction is created",

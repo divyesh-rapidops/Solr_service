@@ -1,13 +1,16 @@
 module.exports = function makeCheckCollection({
-    checkCollectionDb
+    checkCollectionDb,
+    Joi
 }) {
     return async function checkCollection({
         collectionName
     }) {
+        console.log("checkCollection usecase", collectionName)
         validateInputData({ collectionName })
-        const result = await checkCollectionDb({ collectionName });
+        const length = await checkCollectionDb({ collectionName });
+        console.log("result of checkcollectionname", length);
         let isCollectionExist = false;
-        if (result.length)
+        if (length)
             isCollectionExist = true;
 
         return isCollectionExist;

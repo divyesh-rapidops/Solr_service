@@ -1,11 +1,11 @@
 module.exports = function makeAddDocumentAction({
     addDocument,
-    createCollection
 }) {
     return async function addDocumentAction(req, res) {
         try {
             const docs = req.body;
-            const collectionName = res.body.language;
+            const collectionName = req.headers.language;
+            console.log("addDocumentaction", docs, collectionName)
             const result = await addDocument({ docs, collectionName })
             res.status(201).json({
                 message: "data is added",
