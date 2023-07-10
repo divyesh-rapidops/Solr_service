@@ -3,7 +3,8 @@ module.exports = function makeAddDocument({
     addDocumentDb,
     checkCollection,
     ValidationError,
-    createCollection
+    createCollection,
+
 }) {
     return async function addDocument({
         docs, collectionName

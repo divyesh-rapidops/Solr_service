@@ -5,13 +5,13 @@ module.exports = function makeCollectionDbMethod({
     DatabaseError
 }) {
     return Object.freeze({
-        addLanguage,
-        deleteLanguage,
-        updatedLanguage,
-        getLanguage,
+        addCollection,
+        deleteCollection,
+        updatedCollection,
+        getCollection,
         checkCollection
     })
-    async function addLanguage({
+    async function addCollection({
         collectionName
     }) {
         try {
@@ -22,7 +22,7 @@ module.exports = function makeCollectionDbMethod({
             throw new DatabaseError(e);
         }
     }
-    async function deleteLanguage({
+    async function deleteCollection({
         id
     }) {
         try {
@@ -34,7 +34,7 @@ module.exports = function makeCollectionDbMethod({
         }
 
     }
-    async function updatedLanguage({
+    async function updatedCollection({
         collectionName, id
     }) {
         try {
@@ -46,7 +46,7 @@ module.exports = function makeCollectionDbMethod({
         }
 
     }
-    async function getLanguage({
+    async function getCollection({
 
     }) {
         try {

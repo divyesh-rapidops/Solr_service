@@ -13,7 +13,8 @@ const makeCreateCollection = require('./create-collection');
 const createCollection = makeCreateCollection({
     axios,
     Joi,
-    ValidationError: exceptions.ValidationError
+    ValidationError: exceptions.ValidationError,
+    addCollection: dbMethods.collectionDbMethod.addCollection
 });
 const makeAddDocument = require('./add-document');
 const addDocument = makeAddDocument({

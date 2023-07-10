@@ -1,5 +1,6 @@
 module.exports = function makeCreateCollection({
-    axios
+    axios,
+    addCollectionDb
 }) {
     return async function createCollection({
         collectionName, numShards, replicationFactor, configset
@@ -18,6 +19,7 @@ module.exports = function makeCreateCollection({
         try {
             const response = await axios.post(url, data);
             console.log(`Solr collection ${collectionName} created successfully.`);
+            await addCollectionDb({ collectionName });
             console.log(response.data);
         } catch (error) {
             console.error('Error creating Solr collection:', error);
