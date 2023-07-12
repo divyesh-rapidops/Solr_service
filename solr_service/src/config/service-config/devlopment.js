@@ -1,6 +1,4 @@
 const config = {
-    baseURL: 'http://localhost:8983/solr',
-    database: 'language',
     cockroach: {
         host: 'localhost',
         user: 'divyesh',
